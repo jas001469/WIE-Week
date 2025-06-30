@@ -63,7 +63,7 @@ export default function Level5() {
             timeRemaining: timeLeft
           }
         });
-      }, 1000);
+      }, 100);
       
       return () => clearTimeout(timer);
     }

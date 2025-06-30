@@ -24,7 +24,7 @@ const Home = () => {
 
   <div className="title-container">
     <h1 className="title">WIE WEEK</h1>
-    <h1 className="subtitle">CRYPTIC HUNT</h1>
+    <h1 className="subtitle">ClueQuest</h1>
   </div>
 
   <div className="wie-logo-right">

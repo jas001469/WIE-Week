@@ -15,7 +15,7 @@ const Level4 = () => {
   // Common 3-5 letter words for the puzzle
   const wordList = [
     'FIRE', 'CODE', 'GAME', 'GLOW', 'ZOOM', 
-    'ECHO', 'JAVA', 'LOOP', 'DATA', 'BYTE'
+    'GOOD', 'JAVA', 'LOOP', 'DATA', 'BYTE'
   ];
 
   // Morse code dictionary
@@ -36,7 +36,7 @@ const Level4 = () => {
     
     // Reveal exactly two random letters initially
     const indices = [];
-    while (indices.length < 2) {
+    while (indices.length < 1) {
       const randomIndex = Math.floor(Math.random() * randomWord.length);
       if (!indices.includes(randomIndex)) {
         indices.push(randomIndex);
