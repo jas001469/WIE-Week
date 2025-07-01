@@ -69,7 +69,12 @@ You drift with the sun, then descend into the longest shadow.`,
 
 export default function SudokuGame() {
   const navigate = useNavigate();
-  const selectedRiddle = echoRiddles[Math.floor(Math.random() * echoRiddles.length)];
+
+  // ✅ This line now ensures a riddle is selected only once per session
+  const [selectedRiddle] = useState(() => {
+    return echoRiddles[Math.floor(Math.random() * echoRiddles.length)];
+  });
+
   const [userName, setUserName] = useState("");
   const [userId, setUserId] = useState(["", "", "", "", ""]);
   const [message, setMessage] = useState("");
@@ -102,17 +107,22 @@ export default function SudokuGame() {
     navigate("/Level2", { state: { userName, level1Completed: true } });
   };
 
-    const { startTimer } = useTimer();
+  const { startTimer } = useTimer();
 
   useEffect(() => {
     startTimer();
-  }, []);
+}, []);
 
-  return (
-    <div style={{
+return (
+  <div
+    style={{
       height: '100vh',
       width: '100vw',
-      background: `radial-gradient(circle at 50% 50%, #2a0a0a 0%, #1a0000 30%, #0a0000 70%, #000 100%), url(${backgroundImg})`,
+      backgroundImage: `url(${backgroundImg}), radial-gradient(circle at 50% 50%, rgba(42,10,10,0.2), rgba(0,0,0,0.5))`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundBlendMode: 'overlay',
       position: 'fixed',
       top: 0,
       left: 0,
@@ -121,7 +131,9 @@ export default function SudokuGame() {
       display: 'flex',
       flexDirection: 'column',
       fontFamily: "'Courier New', monospace"
-    }}>
+    }}
+  >
+    <>
       <style>{`
         @keyframes pulse-glow {
           0%, 100% { box-shadow: 0 0 20px #ff0000, inset 0 0 20px rgba(255, 0, 0, 0.1); }
@@ -571,6 +583,7 @@ export default function SudokuGame() {
           </div>
         </div>
       )}
-    </div>
-  );
+    </>
+  </div>
+  );
 }

@@ -7,78 +7,80 @@ const Level4 = () => {
   const [inputValue, setInputValue] = useState('');
   const [feedback, setFeedback] = useState('');
   const [showHints, setShowHints] = useState(false);
-  const [currentMorse, setCurrentMorse] = useState('');
   const [currentWord, setCurrentWord] = useState('');
   const [revealedIndices, setRevealedIndices] = useState([]);
+  const [blinkStatus, setBlinkStatus] = useState('');
+  const [blinkIndex, setBlinkIndex] = useState(0); // index of letter being blinked
   const sceneRef = useRef(null);
 
-  // Common 3-5 letter words for the puzzle
-  const wordList = [
-    'FIRE', 'CODE', 'GAME', 'GLOW', 'ZOOM', 
-    'GOOD', 'JAVA', 'LOOP', 'DATA', 'BYTE'
-  ];
+  const wordList = ['CODE', 'LAMP', 'NODE', 'SIGN', 'DARK', 'GLOW', 'BYTE', 'PING', 'BEEP', 'WATT'];
 
-  // Morse code dictionary
   const morseCode = {
-    'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.',
-    'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---',
-    'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---',
-    'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-',
-    'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--',
-    'Z': '--..'
+    A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....',
+    I: '..', J: '.---', K: '-.-', L: '.-..', M: '--', N: '-.', O: '---', P: '.--.',
+    Q: '--.-', R: '.-.', S: '...', T: '-', U: '..-', V: '...-', W: '.--',
+    X: '-..-', Y: '-.--', Z: '--..'
   };
 
-  // Initialize random word and morse code
   useEffect(() => {
     const randomWord = wordList[Math.floor(Math.random() * wordList.length)];
     setCurrentWord(randomWord);
-    setCurrentMorse(encodeToMorse(randomWord));
-    
-    // Reveal exactly two random letters initially
     const indices = [];
     while (indices.length < 1) {
-      const randomIndex = Math.floor(Math.random() * randomWord.length);
-      if (!indices.includes(randomIndex)) {
-        indices.push(randomIndex);
-      }
+      const rand = Math.floor(Math.random() * randomWord.length);
+      if (!indices.includes(rand)) indices.push(rand);
     }
     setRevealedIndices(indices);
   }, []);
 
-  const encodeToMorse = (word) => {
-    return word.split('').map(char => morseCode[char]).join(' ');
-  };
-
-  // Light patterns based on current morse code
   useEffect(() => {
-    if (!currentMorse) return;
+    if (!currentWord) return;
+    if (blinkIndex >= currentWord.length) return;
 
-    const morseParts = currentMorse.split(' ');
-    let currentPart = 0;
+    // Skip revealed letter
+    while (revealedIndices.includes(blinkIndex)) {
+      setBlinkIndex((prev) => prev + 1);
+      return;
+    }
+
+    const currentChar = currentWord[blinkIndex];
+    const code = morseCode[currentChar.toUpperCase()]?.split('') || [];
     let step = 0;
-    
+
+    setBlinkStatus(`Now blinking for letter ${blinkIndex + 1}`);
+
     const interval = setInterval(() => {
-      const pattern = morseParts[currentPart];
-      const symbol = pattern ? pattern[step % pattern.length] : null;
-      
-      // Control all lights based on current symbol
-      const lights = document.querySelectorAll('.light-element');
-      lights.forEach(light => {
-        light.style.opacity = symbol === '.' ? '1' : 
-                             symbol === '-' ? '0.7' : '0.2';
-      });
-      
-      step++;
-      if (step >= pattern.length) {
-        step = 0;
-        currentPart = (currentPart + 1) % morseParts.length;
+      if (step < code.length) {
+        const symbol = code[step];
+        document.querySelectorAll('.light-element').forEach(light => {
+          light.style.opacity = symbol === '.' ? '1' : '0.7';
+        });
+      } else {
+        document.querySelectorAll('.light-element').forEach(light => {
+          light.style.opacity = '0.1';
+        });
       }
-    }, 300);
+
+      step++;
+      if (step > code.length) step = 0;
+    }, 800); // Adjust blink speed here
 
     return () => clearInterval(interval);
-  }, [currentMorse]);
+  }, [currentWord, blinkIndex, revealedIndices]);
 
-  // Parallax effect
+  // Watch for input length to advance blinkIndex
+  useEffect(() => {
+    const typedIndices = currentWord.split('').map((_, i) =>
+      revealedIndices.includes(i) || inputValue.length > i
+    );
+
+    const nextIndex = typedIndices.findIndex((v, i) => !v);
+
+    if (nextIndex !== -1 && nextIndex !== blinkIndex) {
+      setBlinkIndex(nextIndex);
+    }
+  }, [inputValue, currentWord, revealedIndices]);
+
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (!sceneRef.current) return;
@@ -97,13 +99,10 @@ const Level4 = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputValue.trim().toUpperCase() === currentWord) {
-      setFeedback('Correct! Well done!');
-      // Redirect to Level 5 after a short delay
-      setTimeout(() => {
-        navigate("/Level5");
-      }, 1500);
+      setFeedback('✅ Correct! Well done!');
+      setTimeout(() => navigate('/Level5'), 200);
     } else {
-      setFeedback('Not quite right. Keep trying!');
+      setFeedback('❌ Not quite right. Try again!');
     }
   };
 
@@ -111,44 +110,33 @@ const Level4 = () => {
     <div className="level4-container">
       <div className="header">
         <h2>Morse Code Lights</h2>
-        <p>Decipher the hidden word from the flashing lights</p>
+        <p>Decode the blinking pattern</p>
       </div>
-      
+
       <div className="instructions">
-        <h3>How to Solve This Puzzle:</h3>
+        <h3>How to Solve:</h3>
         <ol>
-          <li>Watch the blinking pattern of the lights carefully</li>
-          <li>Short blinks (bright) represent dots (•) in Morse code</li>
-          <li>Long blinks (dim) represent dashes (–) in Morse code</li>
-          <li>Pauses between blinks separate letters</li>
-          <li>Match the pattern to the Morse code reference</li>
-          <li>Use the two revealed letters to help decode the full word</li>
+          <li>Short blink = Dot (•), Long blink = Dash (–)</li>
+          <li>Breaks between symbols = Letters</li>
+          <li>Use hints and revealed letters to decode</li>
         </ol>
       </div>
 
       <div className="hint-panel">
-        <button 
-          onClick={() => setShowHints(!showHints)}
-          className="hint-button"
-        >
+        <button onClick={() => setShowHints(!showHints)} className="hint-button">
           {showHints ? 'Hide Reference' : 'Show Morse Reference'}
         </button>
-        
         {showHints && (
           <div className="hints">
             <div className="morse-reference">
               <div className="morse-guide">
-                <h4>Morse Code Basics:</h4>
-                <p><strong>•</strong> = Dot (short flash)</p>
-                <p><strong>–</strong> = Dash (long flash)</p>
-                <p>Space between letters</p>
-                <div className="example">
-                  <p><strong>Example:</strong> ... --- ... = SOS</p>
-                </div>
+                <h4>Morse Basics:</h4>
+                <p><strong>•</strong> = Dot (short)</p>
+                <p><strong>–</strong> = Dash (long)</p>
+                <p><em>... --- ...</em> = SOS</p>
               </div>
-              
               <div className="morse-table">
-                <h4>Morse Code Alphabet:</h4>
+                <h4>Alphabet Table:</h4>
                 <div className="table-grid">
                   {Object.entries(morseCode).map(([letter, code]) => (
                     <div key={letter} className="morse-row">
@@ -167,50 +155,50 @@ const Level4 = () => {
         <p>Word Progress:</p>
         <div className="letters">
           {currentWord.split('').map((letter, i) => (
-            <span 
-              key={i} 
-              className={`letter ${revealedIndices.includes(i) ? 'revealed' : ''}`}
-            >
-              {revealedIndices.includes(i) ? letter : '?'}
+            <span key={i} className={`letter ${revealedIndices.includes(i) ? 'revealed' : ''}`}>
+              {revealedIndices.includes(i) ? letter : inputValue[i] || '?'}
             </span>
           ))}
         </div>
-        <p className="hint-text">Two letters have been revealed to help you start</p>
+        <p className="hint-text">One letter revealed to assist you</p>
       </div>
 
+      {blinkStatus && (
+        <div className="blink-indicator">
+          <p>{blinkStatus}</p>
+        </div>
+      )}
+
       <div className="scene" ref={sceneRef}>
-        <div className="sky"></div>
-        
+        <div className="sky" />
         <div className="buildings">
           <div className="building">
             <div className="windows">
               {Array.from({ length: 12 }).map((_, i) => (
-                <div key={i} className="window light-element"></div>
+                <div key={i} className="window light-element" />
               ))}
             </div>
           </div>
         </div>
-        
         <div className="street">
-          <div className="street-lamp light-element"></div>
-          <div className="street-lamp light-element"></div>
+          <div className="street-lamp light-element" />
+          <div className="street-lamp light-element" />
         </div>
-        
         <div className="cars">
           <div className="car">
-            <div className="headlight light-element"></div>
+            <div className="headlight light-element" />
           </div>
         </div>
       </div>
-      
+
       <div className="controls">
         <form onSubmit={handleSubmit}>
           <input
             type="text"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => setInputValue(e.target.value.toUpperCase())}
             placeholder="Enter decoded word..."
-            maxLength={10}
+            maxLength={currentWord.length}
           />
           <button type="submit" className="submit-button">Decrypt</button>
         </form>

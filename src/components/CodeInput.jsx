@@ -1,3 +1,4 @@
+
 export default function CodeInput({ answer, setAnswer, onSubmit, showHint }) {
   return (
     <div className="code-input-area">
@@ -7,6 +8,13 @@ export default function CodeInput({ answer, setAnswer, onSubmit, showHint }) {
         value={answer}
         onChange={(e) => setAnswer(e.target.value)}
         className="input-box"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            onSubmit();
+          }
+        }}
+        
       />
       <button className="submit-btn" onClick={onSubmit}>SUBMIT</button>
       {showHint && (

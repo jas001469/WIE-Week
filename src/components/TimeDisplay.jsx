@@ -18,7 +18,7 @@ const TimerDisplay = () => {
   return (
     <div style={{
       position: 'fixed',
-      top: '10px',
+      top: '630px',
       right: '20px',
       padding: '10px 20px',
       background: 'rgba(0, 0, 0, 0.8)',

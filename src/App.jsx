@@ -10,11 +10,13 @@ import Level5 from './levels/Level5.jsx';
 import Level6 from './levels/Level6.jsx'; 
 import { TimerProvider } from './components/TimerContext.jsx';
 import Timer from './components/TimeDisplay.jsx';
+import ResetButton from './components/ResetButton.jsx';
 
 const App = () => {
   return (
     <TimerProvider>
       <Timer />
+      <ResetButton />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Story" element={<Story />} />

@@ -6,12 +6,13 @@ export default function ModalViewer({ selectedTile, closeModal, riddle }) {
       <Dialog.Panel className="modal-overlay">
         <div className="modal-box">
           <Dialog.Title className="modal-title">{selectedTile}.txt</Dialog.Title>
-          <p className="modal-content">
-            {riddle?.question || "No riddle available for this tile."}
-          </p>
+          <pre className="modal-content">
+  {riddle?.question || "No riddle available for this tile."}
+</pre>
+
           <button className="modal-close" onClick={closeModal}>CLOSE</button>
         </div>
       </Dialog.Panel>
     </Dialog>
-  );
+  );
 }

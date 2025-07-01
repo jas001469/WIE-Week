@@ -10,7 +10,7 @@ import bgImage from "../images/new-bg.png";
 
 export default function Level5() {
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds (changed from 900)
+  const [timeLeft, setTimeLeft] = useState(900); // 5 minutes in seconds (changed from 900)
   const [current, setCurrent] = useState(0);
   const [input, setInput] = useState("");
   const [feedback, setFeedback] = useState("");
