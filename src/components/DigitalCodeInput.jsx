@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import '../Levels/Level2.css';
+import '../levels/Level2.css';
 
 export default function DigitCodeInput({ onCorrect }) {
   const [digits, setDigits] = useState(["", "", "", "", "", ""]);
