@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../Levels/Level2.css';
+import '../levels/Level2.css';
 
 export default function CodeChallenge({ onPass, levelCompleted, onThreeFails }) {
   const [input, setInput] = useState("");
