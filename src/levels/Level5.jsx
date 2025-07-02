@@ -10,12 +10,15 @@ import bgImage from "../images/new-bg.png";
 
 export default function Level5() {
   const navigate = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(900); // 5 minutes in seconds (changed from 900)
+  const [timeLeft, setTimeLeft] = useState(900); // 15 minutes in seconds
   const [current, setCurrent] = useState(0);
   const [input, setInput] = useState("");
   const [feedback, setFeedback] = useState("");
   const [score, setScore] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [robotMessage, setRobotMessage] = useState(
+    `Every second matters. Answer all ${questions.length} encrypted protocols before the session self-terminates.`
+  );
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -32,45 +35,46 @@ export default function Level5() {
   }, []);
 
   const handleAnswerSubmit = () => {
-    const correct = questions[current].a.toLowerCase().trim();
-    const user = input.toLowerCase().trim();
-    
+    const normalize = (str) => str.toLowerCase().replace(/\s+/g, "").trim();
+const correct = normalize(questions[current].a);
+const user = normalize(input);
+
+
     if (user === correct) {
       setScore(score + 1);
       setFeedback("✅ Correct! Good job.");
+      setInput("");
+
+      if (current + 1 >= questions.length) {
+        setIsComplete(true);
+      } else {
+        setCurrent(current + 1);
+      }
     } else {
       setFeedback("❌ Incorrect answer.");
-    }
-    
-    setInput("");
-    
-    // Check if this was the last question
-    if (current + 1 >= questions.length) {
-      setIsComplete(true);
-    } else {
-      setCurrent(current + 1);
+      setInput("");
     }
   };
 
   useEffect(() => {
-    if (isComplete) {
-      // Redirect to Level 6 after a short delay
+    if (isComplete && score === questions.length) {
       const timer = setTimeout(() => {
-        navigate("/Level6", {  // Changed from "/Level6" to "/level6" (case-sensitive)
+        navigate("/Level6", {
           state: {
             score,
             totalQuestions: questions.length,
-            timeRemaining: timeLeft
-          }
+            timeRemaining: timeLeft,
+          },
         });
       }, 100);
-      
+
       return () => clearTimeout(timer);
     }
   }, [isComplete, navigate, score, timeLeft]);
 
-  // Calculate progress percentage (fixed to show 100% when all questions answered)
-  const progressPercentage = isComplete ? 100 : ((current / questions.length) * 100);
+  const progressPercentage = isComplete
+    ? 100
+    : (current / questions.length) * 100;
 
   return (
     <div
@@ -86,14 +90,23 @@ export default function Level5() {
 
       <div className="echo-instruction">
         <img src={echoRobot} alt="Echo Robot" className="echo-robot" />
-        <div className="robot-dialogue">
-          Every second matters. Answer all {questions.length} encrypted protocols before the session self-terminates.
-        </div>
+        <div className="robot-dialogue">{robotMessage}</div>
       </div>
 
-      <div className="echo-hints right">ECHO HINTS</div>
+      <div
+        className="echo-hints right"
+        onClick={() =>
+          setRobotMessage(
+            "Hint: Answer all the questions correctly to move to the next level."
+          )
+        }
+      >
+        ECHO HINTS
+      </div>
+
       <Timer timeLeft={timeLeft} />
-      <ProgressBar current={progressPercentage} /> {/* Updated to use percentage */}
+      <ProgressBar correct={score} total={questions.length} />
+
       <QuestionPanel
         question={!isComplete ? questions[current] : null}
         input={input}
@@ -106,6 +119,6 @@ export default function Level5() {
         timeLeft={timeLeft}
         totalQuestions={questions.length}
       />
-    </div>
-  );
+    </div>
+  );
 }

@@ -7,7 +7,7 @@ export default function CodeChallenge({ onPass, levelCompleted, onThreeFails }) 
   const [attempts, setAttempts] = useState(0);
 
   const checkAnswer = () => {
-    if (input.trim().toUpperCase() === "DKR") {
+    if (input.trim().toUpperCase() === "IEM") {
       setError(false);
       onPass();
     } else {

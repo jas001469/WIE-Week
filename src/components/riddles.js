@@ -1,4 +1,3 @@
-
 const distractionQuestions = [
     {
       question: `def fib(n):
@@ -125,8 +124,7 @@ const distractionQuestions = [
   allTiles.forEach((tile) => {
     if (tile === "E5") {
       riddles[tile] = {
-        question: `def cipher_sum():
-      return sum(((i**2 + 3*i) % (i % 5 + 2)) ** (i % 3 + 1) for i in range(10, 26) if i % 4 != 0)
+        question: `def cipher_sum():\nreturn sum(\n((i**2 + 3*i) % (i % 5 + 2)) ** (i % 3 + 1) \nfor i in range(10, 26) if i % 4 != 0)
   
   print(cipher_sum())`,
         answer: "124",
@@ -137,5 +135,4 @@ const distractionQuestions = [
     }
   });
   
-  export default riddles;
-  
+  export default riddles;

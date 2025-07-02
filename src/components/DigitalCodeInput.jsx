@@ -6,7 +6,7 @@ export default function DigitCodeInput({ onCorrect }) {
   const [error, setError] = useState(false);
   const inputRefs = useRef([]);
 
-  const correctCode = "429675";
+  const correctCode = "914751";
 
   const handleChange = (value, index) => {
     if (/^\d$/.test(value)) {

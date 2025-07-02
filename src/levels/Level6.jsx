@@ -149,7 +149,7 @@ const Level6 = () => {
                 color: '#ffffff',
                 textShadow: '0 0 8px rgba(255,255,255,0.2)',
               }}>
-                Your Task: From the conflicting stories above, identify the real saboteur. Submit their name in the answer box to complete the Cryptic Hunt. First correct submission wins.
+                Your Task: From the conflicting stories above, identify the real saboteur. Submit their name in the Google Form to complete the Cryptic Hunt. First correct submission wins.
               </p>
             </div>
           </div>

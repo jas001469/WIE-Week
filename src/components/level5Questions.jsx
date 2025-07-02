@@ -1,71 +1,12 @@
-// const questions = [
-//     {
-//       q: "I speak without a mouth and hear without ears. What am I?",
-//       a: "Echo",
-//       type: "Riddle"
-//     },
-//     {
-//       q: "What does HTML stand for?",
-//       a: "HyperText Markup Language",
-//       type: "Tech"
-//     },
-//     {
-//       q: "What comes next in the series: 1, 1, 2, 3, 5, 8, ?",
-//       a: "13",
-//       type: "Logic"
-//     }
-//   ];
-  
-//   export default questions;
 const questions = [
   {
-    q: "A sum of money becomes Rs. 8820 in 2 years at compound interest. If the rate of interest is 10% per annum, what is the principal?",
-    a: "Rs. 7300",
-    type: "Math"
-  },
-  {
-    q: "Two trains are running in opposite directions at 60 km/h and 90 km/h. If the length of the slower train is 1 km, how long will it take to pass each other completely?",
-    a: "24 seconds",
-    type: "Math"
-  },
-  {
-    q: "A and B together can complete the work in 12 days. A alone can do it in 20 days. How long will B alone take?",
-    a: "30 days",
-    type: "Math"
-  },
-  {
-    q: "A trader marks his goods 40% above the cost price and allows a discount of 10%. What is his profit percent?",
-    a: "26%",
-    type: "Math"
-  },
-  {
-    q: "The average age of a family of 6 members is 25 years. A baby is born. After one year, what is the average age of the family?",
-    a: "22 years",
-    type: "Math"
-  },
-  {
-    q: "At what time between 7 and 8 o’clock will the hands of a clock be in the same straight line but not together?",
-    a: "38 2/11 minutes past 7",
-    type: "Math"
-  },
-  {
-    q: "A and B invest Rs. 5000 and Rs. 7000 respectively in a business. After one year, if the total profit is Rs. 4800, what is A’s share?",
-    a: "Rs. 2000",
-    type: "Math"
-  },
-  {
-    q: "A boat can go 30 km downstream in 2 hours and the same distance upstream in 3 hours. What is the speed of the stream?",
-    a: "2.5 km/h",
-    type: "Math"
-  },
-  {
-    q: "If x + y = 10 and x − y = 4, then what are x and y?",
+    q: "If x + y = 10 and x − y = 4, then what are x & y? (format: x = __, y = __) where x>y",
     a: "x = 7, y = 3",
     type: "Logic"
   },
   {
-    q: "Statements: All dogs are animals. Some animals are cats. Conclusions: (1) Some dogs are cats. (2) All cats are animals. Which conclusion follows?",
-    a: "Only (2) follows",
+    q: "Statements: All dogs are animals. Some animals are cats.\nConclusions:\n(1) Some dogs are cats.\n(2) All cats are animals.\nWhich conclusion follows?",
+    a: "2",
     type: "Reasoning"
   },
   {
@@ -84,39 +25,81 @@ const questions = [
     type: "Reasoning"
   },
   {
-    q: "Pointing to a man, a woman said, 'His mother is the only daughter of my mother.' How is the woman related to the man?",
-    a: "Mother",
-    type: "Reasoning"
-  },
-  {
-    q: "In a certain language, COMPUTER is coded as RFUVQNPC. How is MACHINE written in that code?",
-    a: "HVJGLQG",
-    type: "Reasoning"
-  },
-  {
-    q: "Fill in the blank in the Python recursion logic: def factorial(n): if n == 0 or n == 1: return 1 return n * factorial()",
+    q:"Python – Recursion Logic:\n\ndef factorial(n):\n    if n == 0 or n == 1:\n        return 1\n    return n * factorial()\n\nprint(factorial(4)) # Output: 24\n\nFill in the blank to complete the recursive logic.",
     a: "n - 1",
     type: "Coding"
   },
   {
-    q: "C – Pointer Arithmetic: What will be printed? int a = 10; int *p = &a; *p = *p + 5; printf(\"%d\", a);",
+    q: "C – Pointer Arithmetic:\n\n#include <stdio.h>\nint main() {\n    int a = 10;\n    int *p = &a;\n    *p = *p + 5;\n    printf(\"%d\", a); // Output: ____\n    return 0;\n}\n\nWhat will be printed?",
     a: "15",
     type: "Coding"
   },
   {
-    q: "JavaScript – Hoisting: What is the output of console.log(x); var x = 5;",
-    a: "undefined",
-    type: "Coding"
-  },
-  {
-    q: "Python – List Modification: a = [1, 2, 3]; b = a; b.append(4); print(a)",
+    q: "Python – List Modification:\n\na = [1, 2, 3]\nb = a\nb.append(4)\nprint(a) # Output: ____",
     a: "[1, 2, 3, 4]",
     type: "Coding"
   },
   {
-    q: "HTML – Script Alert: Fill in the alert message. alert(\"\");",
-    a: "Hello World",
+    q:" Fill in the blanks to calculate the square of a number:\n\n#include <iostream>\nusing namespace std;\nint main() {\n    int n;\n    cin >> n;\n    int result = _____;\n    return 0;\n}",
+    a: "n*n",
     type: "Coding"
+  },
+  {
+    q: "#include <iostream>\nusing namespace std;\nint main() {\n    int a = 3, b = 4;\n    cout << a + b * 2;\n    return 0;\n}",
+    a: "11",
+    type: "Coding"
+  },
+  {
+    q: "for i in ______:  # Fill here\n    print(i, end=\" \")",
+    a: "range(1, 6)",
+    type: "Coding"
+  },
+  {
+    q: "#include <iostream>\nusing namespace std;\n\nint main() {\n    string s = \"abcde\";\n    cout << s.substr(1, 3);\n    return 0;\n}",
+    a: "bcd",
+    type: "Coding"
+  },
+
+  // New questions
+  {
+    q: "What is the shortcut to \"redo\"?",
+    a: "Ctrl + Y",
+    type: "General"
+  },
+  {
+    q: "What comes next: 1, 1, 2, 3, 5, 8, ___?",
+    a: "13",
+    type: "Reasoning"
+  },
+  {
+    q: "What does DBMS stand for?",
+    a: "Database Management System",
+    type: "Tech"
+  },
+  {
+    q: "What comes next in this code pattern?\n\nprint(\"1\")\nprint(\"22\")\nprint(\"333\")\nprint(\"4444\")\n?",
+    a: 'print("55555")',
+    type: "Coding"
+  },
+  {
+    q: "< > < > < > < __ ?\nWhat comes next?",
+    a: ">",
+    type: "Logic"
+  },
+  {
+    q: "I’m a five-letter word. Remove my first letter, and I sound the same. Remove the last letter, I still sound the same. Even if you remove the middle letter, still same! What am I?",
+    a: "Empty",
+    type: "Riddle"
+  },
+  {
+    q: "Unscramble this tech word: EATDBAAS",
+    a: "Database",
+    type: "Tech"
+  },
+  {
+    q: "Forward I’m heavy, but backward I’m not. What am I?",
+    a: "Ton",
+    type: "Riddle"
   }
 ];
 

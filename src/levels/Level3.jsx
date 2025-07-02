@@ -19,21 +19,14 @@ export default function LevelThree() {
   const [showHint, setShowHint] = useState(false);
 
   useEffect(() => {
-    const introMessages = [
-      "Let’s prove ourselves worthy to play this game.",
-      "The board awaits your move.",
-      "Decode the unknown. E5 might help...",
-      "Welcome, strategist. Are you ready?",
-      "Only the curious will win.",
-      "Before you seek hints, seek within."
-    ];
+    const introMessages = ["Welcome, strategist. Are you ready?"];
     setRobotMessage(introMessages[Math.floor(Math.random() * introMessages.length)]);
   }, []);
 
   const handleHintClick = () => {
     setShowHint(true);
     setRobotMessage(
-      "Nemora's mind hides not in memory or logic, but in chaotic patterns. We found fragments in an old war simulation—64 cells, one silent truth. Most are noise. Some deceive. Only one whispers the end. Unmask the silence. Find the whisper before checkmate."
+      "Not the queen’s pawn but the king’s first pride,\nStep two squares forth and claim the wide.\nA center square where battles ignite—\nFind this bold step, and you'll be right."
     );
   };
 
@@ -156,8 +149,8 @@ export default function LevelThree() {
     padding: "1rem",
     width: "100%",
     maxWidth: "400px",
-    maxHeight: "none",
     gap: "1.2rem"
+    // No scroll here!
   };
 
   const robotContainer = {
@@ -222,16 +215,20 @@ export default function LevelThree() {
             showHint={showHint}
           />
           {resultMessage && (
-            <div style={{
-              marginTop: "1rem",
-              padding: "0.6rem 1rem",
-              borderRadius: "8px",
-              color: resultMessage.startsWith("✅") ? "#0f0" : "#f00",
-              background: resultMessage.startsWith("✅") ? "rgba(0,255,0,0.1)" : "rgba(255,0,0,0.1)",
-              fontWeight: "bold",
-              textAlign: "center",
-              width: "100%"
-            }}>
+            <div
+              style={{
+                marginTop: "1rem",
+                padding: "0.6rem 1rem",
+                borderRadius: "8px",
+                color: resultMessage.startsWith("✅") ? "#0f0" : "#f00",
+                background: resultMessage.startsWith("✅")
+                  ? "rgba(0,255,0,0.1)"
+                  : "rgba(255,0,0,0.1)",
+                fontWeight: "bold",
+                textAlign: "center",
+                width: "100%"
+              }}
+            >
               {resultMessage}
             </div>
           )}
@@ -257,6 +254,6 @@ export default function LevelThree() {
           }
         `}
       </style>
-    </div>
-  );
+    </div>
+  );
 }

@@ -16,21 +16,26 @@ const TimerDisplay = () => {
   if (location.pathname === '/' || location.pathname === '/Story') return null;
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: '630px',
-      right: '20px',
-      padding: '10px 20px',
-      background: 'rgba(0, 0, 0, 0.8)',
-      color: '#00FFFF',
-      fontSize: '18px',
-      fontWeight: 'bold',
-      border: '2px solid #00FFFF',
-      borderRadius: '10px',
-      zIndex: 9999,
-      boxShadow: '0 0 10px #00FFFF',
-      fontFamily: "'Courier New', monospace"
-    }}>
+    <div
+      style={{
+        position: 'fixed',
+        bottom: '80px', // 👈 Positioned above the reset button
+        right: '20px',
+        padding: '10px 20px',
+        background: 'rgba(0, 0, 0, 0.8)',
+        color: '#00FFFF',
+        fontSize: '1rem',
+        fontWeight: 'bold',
+        border: '2px solid #00FFFF',
+        borderRadius: '10px',
+        zIndex: 9999,
+        boxShadow: '0 0 10px #00FFFF',
+        fontFamily: "'Courier New', monospace",
+        textAlign: 'center',
+        width: 'fit-content',
+        maxWidth: '90%',
+      }}
+    >
       ⏱ {formatTime(seconds)}
     </div>
   );

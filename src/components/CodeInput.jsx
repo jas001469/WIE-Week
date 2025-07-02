@@ -1,4 +1,3 @@
-
 export default function CodeInput({ answer, setAnswer, onSubmit, showHint }) {
   return (
     <div className="code-input-area">
@@ -17,9 +16,7 @@ export default function CodeInput({ answer, setAnswer, onSubmit, showHint }) {
         
       />
       <button className="submit-btn" onClick={onSubmit}>SUBMIT</button>
-      {showHint && (
-        <div className="hint-box">Hint: The answer may lie at E5 🕵️‍♀️</div>
-      )}
-    </div>
-  );
+    
+    </div>
+  );
 }
