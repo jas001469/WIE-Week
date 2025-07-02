@@ -10,10 +10,10 @@ const Level4 = () => {
   const [currentWord, setCurrentWord] = useState('');
   const [revealedIndices, setRevealedIndices] = useState([]);
   const [blinkStatus, setBlinkStatus] = useState('');
-  const [blinkIndex, setBlinkIndex] = useState(0); // index of letter being blinked
+  const [blinkIndex, setBlinkIndex] = useState(0);
   const sceneRef = useRef(null);
 
-  const wordList = ['CODE','SIGN', 'DARK', 'BYTE'];
+  const wordList = ['CODE', 'SIGN', 'DARK', 'BYTE'];
 
   const morseCode = {
     A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....',
@@ -31,17 +31,13 @@ const Level4 = () => {
       if (!indices.includes(rand)) indices.push(rand);
     }
     setRevealedIndices(indices);
+    setBlinkIndex(0); // Start from first letter
   }, []);
 
+  // Blinking logic
   useEffect(() => {
-    if (!currentWord) return;
-    if (blinkIndex >= currentWord.length) return;
-
-    // Skip revealed letter
-    while (revealedIndices.includes(blinkIndex)) {
-      setBlinkIndex((prev) => prev + 1);
-      return;
-    }
+    if (!currentWord || blinkIndex >= currentWord.length) return;
+    if (revealedIndices.includes(blinkIndex)) return;
 
     const currentChar = currentWord[blinkIndex];
     const code = morseCode[currentChar.toUpperCase()]?.split('') || [];
@@ -63,18 +59,16 @@ const Level4 = () => {
 
       step++;
       if (step > code.length) step = 0;
-    }, 800); // Adjust blink speed here
+    }, 800);
 
     return () => clearInterval(interval);
   }, [currentWord, blinkIndex, revealedIndices]);
 
-  // Watch for input length to advance blinkIndex
+  // Advance to next unrevealed letter after input
   useEffect(() => {
-    const typedIndices = currentWord.split('').map((_, i) =>
-      revealedIndices.includes(i) || inputValue.length > i
-    );
-
-    const nextIndex = typedIndices.findIndex((v, i) => !v);
+    const nextIndex = currentWord
+      .split('')
+      .findIndex((_, i) => !revealedIndices.includes(i) && inputValue.length <= i);
 
     if (nextIndex !== -1 && nextIndex !== blinkIndex) {
       setBlinkIndex(nextIndex);
@@ -116,7 +110,7 @@ const Level4 = () => {
       <div className="instructions">
         <h3>How to Solve:</h3>
         <ol>
-          <li>Short blink = Dot (•), Long blink = Dash (–)</li>
+          <li>Short blink (bright flash) = Dot (•), Long blink (dim but longer) = Dash (–)</li>
           <li>Breaks between symbols = Letters</li>
           <li>Use hints and revealed letters to decode</li>
         </ol>
@@ -131,8 +125,8 @@ const Level4 = () => {
             <div className="morse-reference">
               <div className="morse-guide">
                 <h4>Morse Basics:</h4>
-                <p><strong>•</strong> = Dot (short)</p>
-                <p><strong>–</strong> = Dash (long)</p>
+                <p><strong>•</strong> = Dot (short: bright flash)</p>
+                <p><strong>–</strong> = Dash (long: dim but longer)</p>
                 <p><em>... --- ...</em> = SOS</p>
               </div>
               <div className="morse-table">
