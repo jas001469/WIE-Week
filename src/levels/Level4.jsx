@@ -13,7 +13,7 @@ const Level4 = () => {
   const [blinkIndex, setBlinkIndex] = useState(0); // index of letter being blinked
   const sceneRef = useRef(null);
 
-  const wordList = ['CODE', 'LAMP', 'NODE', 'SIGN', 'DARK', 'GLOW', 'BYTE', 'PING', 'BEEP', 'WATT'];
+  const wordList = ['CODE','SIGN', 'DARK', 'BYTE'];
 
   const morseCode = {
     A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....',
